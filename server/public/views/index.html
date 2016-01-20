@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="views/styles.css">
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="assets/scripts/client.min.js"></script>
+</head>
+<body ng-controller="mainController">
+    <h1>Postgres Talent Challenge</h1>
+
+    <div class="container">
+        <button class="">Save button for later</button>
+
+        <div class="col-md-4">
+            <form id="taskForm" method="post">
+                <div>
+                    <label for="text">Skill: </label>
+                    <input type="text" name="text" id="text" ng-model="skillName"/>
+                    <input type="submit" ng-click="addSkills(skillName)" value="Add Skill"/>
+
+                    <p>{{data}}</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
