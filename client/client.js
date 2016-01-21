@@ -3,11 +3,14 @@
  */
 var app = angular.module("myApp", []);
 
-app.controller('mainController', ['$scope', 'addNewSkills', function($scope, addNewSkills){
+app.controller('mainController', ['$scope', 'addNewSkills', 'getSkillz', 'getTalent', function($scope, addNewSkills, getSkillz, getTalent){
     $scope.hello = "Elaborate Greeting!";
     $scope.addSkills = addNewSkills.addSkills;
-    $scope.data = addNewSkills.data.response;
-    //console.log($scope.data);
+    $scope.displaySkillz = getSkillz.getSkillz;
+    $scope.skillz = getSkillz.data;
+    console.log($scope.displaySkillz);
+    $scope.getTalent = getTalent.getTalent;
+    $scope.talent = getTalent.data;
 }]);
 
 app.factory('addNewSkills', ['$http', function($http){
@@ -19,7 +22,6 @@ app.factory('addNewSkills', ['$http', function($http){
 
         $http.post('/addSkills', sendSkills).then(function(response, err){
             //data.response = response.data;
-            //console.log(data);
         });
         //return data;
     };
@@ -31,7 +33,28 @@ app.factory('addNewSkills', ['$http', function($http){
 
 app.factory('getSkillz', ['$http', function($http){
     var data = {};
-    $http.get('/getSkillz').then(function(response, err){
-        data.response = response.data;
-    });
+    var getSkillz = function(){
+        $http.get('/getSkillz').then(function(response, err) {
+            data.response = response.data;
+            console.log(data.response);
+        });
+    };
+    return {
+        data: data,
+        getSkillz: getSkillz
+    };
+}]);
+
+app.factory('getTalent', ['$http', function($http){
+    var data = {};
+    var getTalent = function(){
+        $http.get('/getTalent').then(function(response, err) {
+            data.response = response.data;
+            console.log(data.response);
+        });
+    };
+    return {
+        data: data,
+        getTalent: getTalent
+    };
 }]);

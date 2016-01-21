@@ -18,7 +18,6 @@ router.post('/addSkills', function(request, response){
     var data = {name: request.body.skill};
 
     pg.connect(connectionString, function(err, client, done) {
-        var results = [];
 
         // Handle Errors
         if(err) {
@@ -26,16 +25,51 @@ router.post('/addSkills', function(request, response){
         }
 
         // SQL Query > Insert Data.
-        client.query("INSERT INTO skills(name) values($1)", [data.name]);
+        var query = client.query("INSERT INTO skills(name) values($1)", [data.name]);
 
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            client.end();
+        });
+    });
+});
+
+router.get('/getSkillz', function(request, response){
+   pg.connect(connectionString, function(err, client, done){
+       var results = [];
+
+       if(err) {
+           console.log(err);
+       }
+       // SQL Query > Select Data
+       var query = client.query("SELECT * FROM skills ORDER BY id ASC");
+
+       // Stream results back one row at a time
+       query.on('row', function(row) {
+           results.push(row);
+       });
+       // After all data is returned, close connection and return results
+       query.on('end', function() {
+           client.end();
+           return response.json(results);
+       });
+   });
+});
+
+router.get('/getTalent', function(request, response){
+    pg.connect(connectionString, function(err, client, done){
+        var results = [];
+
+        if(err) {
+            console.log(err);
+        }
         // SQL Query > Select Data
-        var query = client.query("SELECT * FROM skills ORDER BY id ASC");
+        var query = client.query("SELECT * FROM talent ORDER BY id ASC");
 
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);
         });
-
         // After all data is returned, close connection and return results
         query.on('end', function() {
             client.end();

@@ -11,7 +11,6 @@
     <h1>Postgres Talent Challenge</h1>
 
     <div class="container">
-        <button class="">Save button for later</button>
 
         <div class="col-md-4">
             <form id="taskForm" method="post">
@@ -19,11 +18,25 @@
                     <label for="text">Skill: </label>
                     <input type="text" name="text" id="text" ng-model="skillName"/>
                     <input type="submit" ng-click="addSkills(skillName)" value="Add Skill"/>
-
-                    <p>{{data}}</p>
                 </div>
             </form>
         </div>
+
+        <h2>Talent</h2>
+        <button ng-click="getTalent()">Display All Talent</button>
+        <div ng-repeat="person in talent.response">
+            <p>{{person.first_name}} {{person.last_name}}</p>
+            <p>{{person.phone}}</p>
+            <p>Salary Range: {{person.low_range}} to {{person.high_range}}</p>
+        </div>
+
+        <h2>Skills</h2>
+        <button ng-click="displaySkillz()">Display All Skills</button>
+        <div ng-repeat="skill in skillz.response">
+
+            <p>{{skill.name}}</p>
+        </div>
+
     </div>
 
 </body>
